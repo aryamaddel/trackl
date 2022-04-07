@@ -9,14 +9,23 @@ db = SQLAlchemy(app)
 
 
 class Todo(db.Model):
-    pass
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100))
+    complete = db.Column(db.Boolean)
 
 
 @app.route('/')
 def index():
+    todo_list = Todo.query.all()
+    print(todo_list)
     return render_template('index.html')
 
 
 if __name__ == "__main__":
     db.create_all()
+
+    new_todo = Todo(title="todo 1", complete=False)
+    db.session.add(new_todo)
+    db.session.commit()
+
     app.run(debug=True)
