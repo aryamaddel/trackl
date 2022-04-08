@@ -8,7 +8,7 @@
   </head>
   <body>
     <h1>Trackl - ToDo App</h1>
-    <form action="">
+    <form action="/add" method="post">
       <div class="">
         <label for="title">Task</label>
         <input type="text" name="title" placeholder="Enter task" />
@@ -18,6 +18,13 @@
     </form>
     {% for todo in todo_list %}
     <p>{{ todo.id }} | {{ todo.title }}</p>
-    {% if todo.complete==False %} {% endfor %}
+    {% if todo.complete == False %}
+    <span>Not complete</span>
+    {% else %}
+    <span>Complete</span>
+    {% endif %}
+    <a href="/update/{{ todo.id }}">Update</a>
+    <a href="/delete/{{ todo.id }}">Delete</a>
+    {% endfor %}
   </body>
 </html>
