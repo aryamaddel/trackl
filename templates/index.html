@@ -2,36 +2,46 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Trackl</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    <title>Trackl - ToDo App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body>
-    <div class="ui container">
-      <h1 class="ui center aligned header">Trackl - ToDo App</h1>
-      <form class="ui form" action="/add" method="post">
-        <div class="field">
-          <label for="title">Task</label>
-          <input type="text" name="title" placeholder="Enter task" />
-          <br />
-          <button class="ui blue button" type="submit">Add</button>
-        </div>
+  <body class="bg-gray-100 p-5">
+    <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
+      <h1 class="text-2xl font-bold text-center mb-4">Trackl - ToDo App</h1>
+
+      <form class="flex space-x-2 mb-4" action="/add" method="post">
+        <input
+          type="text"
+          name="title"
+          placeholder="Enter task"
+          class="w-full p-2 border rounded-lg focus:ring"
+        />
+        <button class="bg-blue-500 text-white px-4 py-2 rounded-lg">Add</button>
       </form>
+
       {% for todo in todo_list %}
-      <div class="ui segment">
-        <p class="ui big header">{{ todo.id }} | {{ todo.title }}</p>
-        {% if not todo.complete %}
-        <span class="ui gray label">Not complete</span>
-        {% else %}
-        <span class="ui green label">Completed</span>
-        {% endif %}
-        <a class="ui blue button" href="/update/{{ todo.id }}">Update</a>
-        <a class="ui red button" href="/delete/{{ todo.id }}">Delete</a>
+      <div
+        class="flex justify-between items-center bg-gray-200 p-3 rounded-lg mb-2"
+      >
+        <p
+          class="text-lg {% if todo.complete %}line-through text-gray-500{% endif %}"
+        >
+          {{ todo.title }}
+        </p>
+        <div class="space-x-2">
+          <a
+            class="bg-green-500 text-white px-3 py-1 rounded"
+            href="/update/{{ todo.id }}"
+          >
+            {% if todo.complete %}Undo{% else %}Complete{% endif %}
+          </a>
+          <a
+            class="bg-red-500 text-white px-3 py-1 rounded"
+            href="/delete/{{ todo.id }}"
+            >Delete</a
+          >
+        </div>
       </div>
       {% endfor %}
     </div>
